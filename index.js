@@ -21,6 +21,7 @@ const sequelize = require("./TiltHaber.Admin/data/db");
 const dummyData = require("./TiltHaber.Admin/data/dummy-data");
 const Category = require("./TiltHaber.Admin/models/category");
 const Blog = require("./TiltHaber.Admin/models/blog");
+const User = require("./TiltHaber.Admin/models/user")
 
 Blog.belongsToMany(Category, { through: "blogCategories"});
 Category.belongsToMany(Blog, { through: "blogCategories"});
