@@ -1,6 +1,8 @@
 const Category = require("../models/category");
 const Blog = require("../models/blog");
 const slugField = require("../helpers/slugfield");
+const User = require("../models/user");
+const bcrypt = require("bcrypt");
 
 async function populate() {
     const count = await Category.count();
@@ -100,6 +102,11 @@ async function populate() {
                 anasayfa: true,
                 onay: true
             }
+        ]);
+
+        const users = await User.bulkCreate([
+            {fullname: "efe", email: "efecmdgn@gmail.com", password: await bcrypt.hash("123123", 10)},
+            {fullname: "eren", email: "erenalagoz@gmail.com", password: await bcrypt.hash("123123", 10)},
         ]);
 
         await categories[0].addBlog(blogs[0]);

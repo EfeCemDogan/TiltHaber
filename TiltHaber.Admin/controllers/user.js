@@ -21,7 +21,8 @@ exports.blogs_details = async function(req, res) {
             // });
             return res.render("../TiltHaber/views/users/blog-details", {
                 title: blog.baslik,
-                blog: blog
+                blog: blog,
+            isAuth: req.session.isAuth
             });
         }
         res.redirect("/");
@@ -63,7 +64,8 @@ exports.blog_list = async function(req, res) {
             totalPages: Math.ceil(count / size),
             currentPage: page,
             categories: categories,
-            selectedCategory: slug
+            selectedCategory: slug,
+            isAuth: req.session.isAuth
         })
     }
     catch(err) {
@@ -72,6 +74,7 @@ exports.blog_list = async function(req, res) {
 }
 
 exports.index = async function(req, res) {
+    console.log(req.cookies);
     try {
         const blogs = await Blog.findAll({
             where: {
@@ -88,7 +91,8 @@ exports.index = async function(req, res) {
             title: "Tilt Haber",
             blogs: blogs,
             categories: categories,
-            selectedCategory: null
+            selectedCategory: null,
+            isAuth: req.session.isAuth
         })
         // res.render("../TiltHaber/users/index", {
         //     title: "Tilt Haber",
