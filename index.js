@@ -6,8 +6,9 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
-// node modulles
+// node modules
 const path = require("path");
+
 
 // routes
 const userRoutes = require("./TiltHaber.Admin/routes/user");
@@ -27,7 +28,7 @@ const Blog = require("./TiltHaber.Admin/models/blog");
 const User = require("./TiltHaber.Admin/models/user");
 
 // middleware
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({
     secret: "hello world",
@@ -51,9 +52,6 @@ app.use("/static", express.static(path.join(__dirname, "/TiltHaber/views")));
 app.use("/admin", adminRoutes);
 app.use("/account", authRoutes);
 app.use(userRoutes); 
-
-
-
 
 Blog.belongsTo(User, {
     foreignKey: {

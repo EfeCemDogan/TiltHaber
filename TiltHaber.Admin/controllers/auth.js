@@ -1,5 +1,5 @@
 const User = require("../models/user");
-const bcrypt= require("bcrypt")
+const bcrypt = require("bcrypt");
 
 exports.get_register = async function(req, res) {
     try {
@@ -12,14 +12,13 @@ exports.get_register = async function(req, res) {
     }
 }
 
+
 exports.post_register = async function(req, res) {
     const name = req.body.name;
     const email = req.body.email;
     const password = req.body.password;
 
-    // Hash
     const hashedPassword = await bcrypt.hash(password, 10);
-
 
     try {
         await User.create({
@@ -80,16 +79,17 @@ exports.post_login = async function(req, res) {
         const match = await bcrypt.compare(password, user.password);
 
         if(match) {
-
+            // session
             req.session.isAuth = 1;
+            // session in db
+            // token-based auth - api
             return res.redirect("/");
         } 
-
+        
         return res.render("../TiltHaber/views/auth/login", {
             title: "login",
             message: "parola hatalı"
-        });
-        
+        });     
     }
     catch(err) {
         console.log(err);
